@@ -79,20 +79,21 @@ jobs:
           flake8 . --exit-zero --max-complexity=6
 
       - name: Upload python artifacts
+        if: matrix.OsType == 'ubuntu-latest' && matrix.PythonVersion == '3.9'
         uses: actions/upload-artifact@v4
         with:
           name: python-artifacts
           path: .
 
       - name: Upload helm artifacts
-        if: github.ref_name == 'main' || github.ref_name == 'polish'
+        if: (github.ref_name == 'main' || github.ref_name == 'polish') && matrix.OsType == 'ubuntu-latest' && matrix.PythonVersion == '3.9'
         uses: actions/upload-artifact@v4
         with:
           name: helm-artifacts
           path: ${{ github.workspace }}/helm-charts
 
       - name: Upload kind cluster artifact
-        if: github.ref_name == 'main' || github.ref_name == 'polish'
+        if: (github.ref_name == 'main' || github.ref_name == 'polish') && matrix.OsType == 'ubuntu-latest' && matrix.PythonVersion == '3.9'
         uses: actions/upload-artifact@v4
         with:
           name: kind-cluster
